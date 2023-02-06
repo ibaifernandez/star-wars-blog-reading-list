@@ -6,7 +6,6 @@
 !.github
 php_errorlog
 .log
-!.env
 
 # track this file .gitignore (i.e. do NOT ignore it)
 !composer.json
