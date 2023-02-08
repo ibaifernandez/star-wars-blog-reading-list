@@ -42,8 +42,7 @@ const fetchCharacters = () => {
                     />
                     <Card.Body>
                         <Card.Title>{name}</Card.Title>
-                        {/* <Card.Text>Something, something</Card.Text> */}
-                        {/* <Mainfeatures /> */}
+                        <Card.Text></Card.Text>
                         <div className="d-flex justify-content-between">
                             <Button
                                 variant="primary"
@@ -51,7 +50,7 @@ const fetchCharacters = () => {
                                     navigate(`/CharacterConstructor/${uid}`)
                                 }
                             >
-                                Take me elsewhere
+                                More on {name}
                             </Button>
                             <Button
                                 variant="outline-danger"

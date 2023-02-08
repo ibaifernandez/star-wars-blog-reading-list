@@ -30,7 +30,7 @@ const Planets = () => {
     }, []);
 
     return (
-        <div className="mx-auto w-75 bg-light my-3 p-3 d-flex overflow-auto">
+        <div className="mx-auto w-75 my-3 d-flex overflow-auto">
             {planets.map(({ name, uid }, i) => (
                 <Card key={name} className="my-card">
                     <Card.Img
