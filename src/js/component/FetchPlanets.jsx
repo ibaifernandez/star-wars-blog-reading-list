@@ -5,44 +5,43 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 
 const Planets = () => {
-    const [vehicles, setVehicles] = useState([]);
+    const [planets, setPlanets] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch("https://www.swapi.tech/api/vehicles/")
+        fetch("https://www.swapi.tech/api/planets/")
             .then((response) => {
                 if (!response.ok) {
                     throw Error(response.statusText);
                 }
-                console.log("The response was successful!");
+                // console.log("The response was successful!");
                 return response.json();
             })
             .then((thisResponse) => {
-                setVehicles(
+                setPlanets(
                     thisResponse.results.map((item) => {
                         return item;
                     })
                 );
             })
             .catch((error) => {
-                console.log("Looks like there was a problem: \n", error);
+                // console.log("Looks like there was a problem: \n", error);
             });
     }, []);
 
     return (
         <div className="mx-auto w-75 bg-light my-3 p-3 d-flex overflow-auto">
-            {vehicles.map(({ name }, i) => (
+            {planets.map(({ name, uid }, i) => (
                 <Card key={name} className="my-card">
                     <Card.Img
                         variant="top"
-                        src={`https://starwars-visualguide.com/assets/img/vehicles/${
-                            i + 1
-                        }.jpg`}
-                        onError={(e) => {
-                            e.target.onError = null;
-                            e.target.src =
-                                "https://1000marcas.net/wp-content/uploads/2019/12/Star-Wars-Logo-5.png";
-                        }}
+                        src={
+                            i === 0
+                                ? `https://1000marcas.net/wp-content/uploads/2019/12/Star-Wars-Logo-5.png`
+                                : `https://starwars-visualguide.com/assets/img/planets/${
+                                      i + 1
+                                  }.jpg`
+                        }
                     />
                     <Card.Body>
                         <Card.Title>{name}</Card.Title>
@@ -50,7 +49,9 @@ const Planets = () => {
                         <div className="d-flex justify-content-between">
                             <Button
                                 variant="primary"
-                                onClick={() => navigate("/luke")}
+                                onClick={() =>
+                                    navigate(`/PlanetConstructor/${uid}`)
+                                }
                             >
                                 Take me elsewhere
                             </Button>

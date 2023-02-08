@@ -1,6 +1,9 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 
 const Footer = () => {
+    const location = useLocation();
+
     return (
         <div className="container">
             <footer className="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
@@ -19,14 +22,15 @@ const Footer = () => {
                         src="https://1000marcas.net/wp-content/uploads/2019/12/Star-Wars-Logo-5.png"
                     />
                 </a>
-
-                <ul className="nav col-md-4 justify-content-end">
-                    <li className="nav-item">
-                        <a href="/" className="nav-link px-2 text-muted">
-                            Go back to the beginning
-                        </a>
-                    </li>
-                </ul>
+                {location.pathname === "/" ? null : (
+                    <ul className="nav col-md-4 justify-content-end">
+                        <li className="nav-item">
+                            <a href="/" className="nav-link px-2 text-muted">
+                                Go back to the beginning
+                            </a>
+                        </li>
+                    </ul>
+                )}
             </footer>
         </div>
     );

@@ -1,12 +1,12 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import Mynavbar from "../component/Mynavbar.jsx";
+import MyNavbar from "../component/MyNavbar.jsx";
 import Footer from "../component/Footer.jsx";
 
 const Layout = () => {
     return (
         <>
-            <Mynavbar />
+            <MyNavbar />
             <Outlet />
             <Footer />
         </>

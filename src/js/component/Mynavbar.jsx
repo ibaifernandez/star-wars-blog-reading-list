@@ -8,17 +8,19 @@ import Dropdown from "react-bootstrap/Dropdown";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-function Mynavbar() {
+const MyNavbar = () => {
     const [favoriteNumber, setFavoriteNumber] = useState(2);
     const [favoriteContent, setFavoriteContent] = useState("");
 
     const UserFavoriteNumber = () => {
-        if (favoriteNumber === 0) {
+        if (favoriteNumber == 0) {
             useEffect(() => {
-                setFavoriteContent("Empty");
+                setFavoriteContent("Add your first favorites!");
             }, []);
-            return;
         } else {
+            useEffect(() => {
+                setFavoriteContent("Something, something");
+            }, []);
             return (
                 <span className="bg-danger px-2 py-1 mx-1 rounded-circle">
                     {favoriteNumber}
@@ -73,12 +75,14 @@ function Mynavbar() {
                             Favorites {UserFavoriteNumber()}
                         </Dropdown.Toggle>
 
-                        <Dropdown.Menu>{favoriteContent}</Dropdown.Menu>
+                        <Dropdown.Menu className="p-3">
+                            {favoriteContent}
+                        </Dropdown.Menu>
                     </Dropdown>
                 </Navbar.Collapse>
             </Container>
         </Navbar>
     );
-}
+};
 
-export default Mynavbar;
+export default MyNavbar;
