@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 const MyNavbar = () => {
-    const [favoriteNumber, setFavoriteNumber] = useState(2);
+    const [favoriteNumber, setFavoriteNumber] = useState(0);
     const [favoriteContent, setFavoriteContent] = useState("");
 
     const UserFavoriteNumber = () => {

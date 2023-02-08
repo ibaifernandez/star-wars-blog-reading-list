@@ -14,3 +14,5 @@ const Layout = () => {
 };
 
 export default Layout;
+
+// 1. Sigo sin entender cómo funciona <Outlet />

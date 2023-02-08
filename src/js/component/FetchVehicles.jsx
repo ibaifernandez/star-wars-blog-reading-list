@@ -31,7 +31,7 @@ const FetchVehicles = () => {
 
     return (
         <div className="mx-auto w-75 bg-light my-3 p-3 d-flex overflow-auto">
-            {vehicles.map(({ name, uid }, i) => (
+            {vehicles.map(({ name, uid }) => (
                 <Card key={name} className="my-card">
                     <Card.Img
                         variant="top"

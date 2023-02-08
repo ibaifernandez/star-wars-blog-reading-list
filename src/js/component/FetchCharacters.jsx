@@ -34,7 +34,7 @@ const fetchCharacters = () => {
 
     return (
         <div className="mx-auto w-75 my-3 d-flex overflow-auto">
-            {characters.map(({ name, uid }, i) => (
+            {characters.map(({ name, uid }) => (
                 <Card key={name} className="my-card">
                     <Card.Img
                         variant="top"
