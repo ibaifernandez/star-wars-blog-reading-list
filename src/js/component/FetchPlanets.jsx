@@ -3,6 +3,7 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
+import placeholder from "../../img/placeholder.jpeg";
 
 const Planets = () => {
     const [planets, setPlanets] = useState([]);
@@ -35,17 +36,15 @@ const Planets = () => {
                 <Card key={name} className="my-card">
                     <Card.Img
                         variant="top"
-                        src={
-                            i === 0
-                                ? `https://1000marcas.net/wp-content/uploads/2019/12/Star-Wars-Logo-5.png`
-                                : `https://starwars-visualguide.com/assets/img/planets/${
-                                      i + 1
-                                  }.jpg`
-                        }
+                        src={`https://starwars-visualguide.com/assets/img/planets/${uid}.jpg`}
+                        onError={(e) => {
+                            e.target.onError = null;
+                            e.target.src = placeholder;
+                        }}
                     />
                     <Card.Body>
                         <Card.Title>{name}</Card.Title>
-                        <Card.Text>Something, something</Card.Text>
+                        <Card.Text></Card.Text>
                         <div className="d-flex justify-content-between">
                             <Button
                                 variant="primary"
@@ -53,7 +52,7 @@ const Planets = () => {
                                     navigate(`/PlanetConstructor/${uid}`)
                                 }
                             >
-                                Take me elsewhere
+                                More on {name}
                             </Button>
                             <Button
                                 variant="outline-danger"

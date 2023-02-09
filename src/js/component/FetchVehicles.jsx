@@ -39,12 +39,12 @@ const FetchVehicles = () => {
                     />
                     <Card.Body>
                         <Card.Title>{name}</Card.Title>
-                        <Card.Text>Something, something</Card.Text>
+                        <Card.Text></Card.Text>
                         <div className="d-flex justify-content-between">
                             <Button
                                 variant="primary"
                                 onClick={() =>
-                                    navigate(`VehicleConstructor/${uid}`)
+                                    navigate(`/VehicleConstructor/${uid}`)
                                 }
                             >
                                 Take me elsewhere

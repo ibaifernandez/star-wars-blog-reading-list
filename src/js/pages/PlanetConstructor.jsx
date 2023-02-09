@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useParams } from "react-router-dom";
 import FetchPlanets from "../component/FetchPlanets.jsx";
+import placeholder from "../../img/placeholder.jpeg";
 
 const PlanetConstructor = () => {
     const [planetProperties, setPlanetProperties] = useState([]);
@@ -107,8 +108,7 @@ const PlanetConstructor = () => {
                         src={`https://starwars-visualguide.com/assets/img/planets/${planetID}.jpg`}
                         onError={(e) => {
                             e.target.onError = null;
-                            e.target.src =
-                                "https://1000marcas.net/wp-content/uploads/2019/12/Star-Wars-Logo-5.png";
+                            e.target.src = placeholder;
                         }}
                     />
                 </div>

@@ -1,13 +1,12 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router";
 import { useParams } from "react-router-dom";
 import FetchCharacters from "../component/FetchCharacters.jsx";
 
 const CharacterConstructor = () => {
     const [characterProperties, setCharacterProperties] = useState([]);
-    const navigate = useNavigate();
     const { characterID } = useParams();
+    console.log(characterID);
 
     const fetchCharactersProperties = () => {
         fetch(`https://www.swapi.tech/api/people/${characterID}`)
@@ -21,15 +20,16 @@ const CharacterConstructor = () => {
             .then((thisResponse) => {
                 // console.log(thisResponse);
                 setCharacterProperties(thisResponse.result.properties);
+                console.log(thisResponse.result.properties);
             })
             .catch((error) => {
                 // console.log("Looks like there was a problem: \n", error);
             });
     };
 
-    useEffect(() => fetchCharactersProperties(), []);
+    useEffect(() => fetchCharactersProperties(), [characterID]);
 
-    // console.log(characterProperties);
+    console.log(characterProperties);
     // console.log(charactersUid);
 
     const { name, height, mass, eye_color, hair_color, birth_year, gender } =
