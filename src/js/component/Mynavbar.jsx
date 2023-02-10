@@ -1,35 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Dropdown from "react-bootstrap/Dropdown";
-import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useNavigate, NavLink } from "react-router-dom";
+import FavoritesContext from "../context/FavoritesContext.jsx";
 
 const MyNavbar = () => {
-    const [favoriteNumber, setFavoriteNumber] = useState(0);
-    const [favoriteContent, setFavoriteContent] = useState("");
-
-    const UserFavoriteNumber = () => {
-        if (favoriteNumber == 0) {
-            useEffect(() => {
-                setFavoriteContent("Add your first favorites!");
-            }, []);
-        } else {
-            useEffect(() => {
-                setFavoriteContent("Something, something");
-            }, []);
-            return (
-                <span className="bg-danger px-2 py-1 mx-1 rounded-circle">
-                    {favoriteNumber}
-                </span>
-            );
-        }
-    };
-
     const navigate = useNavigate();
+
+    const { value } = useContext(FavoritesContext);
+    console.log(value);
 
     const handleSearch = (e) => {
         if (e.key === "Enter") {
@@ -48,6 +31,43 @@ const MyNavbar = () => {
                         alt="Star Wars Logo"
                     />
                 </Navbar.Brand>
+                <div
+                    className="collapse navbar-collapse"
+                    id="navbarNavAltMarkup"
+                >
+                    <div className="navbar-nav">
+                        <NavLink
+                            to="CharacterConstructor/1"
+                            className={({ isActive }) =>
+                                isActive
+                                    ? "nav-item nav-link active"
+                                    : "nav-item nav-link"
+                            }
+                        >
+                            Characters
+                        </NavLink>
+                        <NavLink
+                            to="PlanetConstructor/1"
+                            className={({ isActive }) =>
+                                isActive
+                                    ? "nav-item nav-link active"
+                                    : "nav-item nav-link"
+                            }
+                        >
+                            Planets
+                        </NavLink>
+                        <NavLink
+                            to="VehicleConstructor/4"
+                            className={({ isActive }) =>
+                                isActive
+                                    ? "nav-item nav-link active"
+                                    : "nav-item nav-link"
+                            }
+                        >
+                            Vehicles
+                        </NavLink>
+                    </div>
+                </div>
                 <Navbar.Toggle aria-controls="navbarScroll" />
                 <Navbar.Collapse id="navbarScroll">
                     <Nav
@@ -72,12 +92,17 @@ const MyNavbar = () => {
 
                     <Dropdown className="ms-3">
                         <Dropdown.Toggle variant="primary" id="dropdown-basic">
-                            Favorites {UserFavoriteNumber()}
+                            Favorites
+                            {value == 0 ? (
+                                " "
+                            ) : (
+                                <span className="bg-danger px-2 py-1 mx-1 rounded-circle">
+                                    {value}
+                                </span>
+                            )}
                         </Dropdown.Toggle>
 
-                        <Dropdown.Menu className="p-3">
-                            {favoriteContent}
-                        </Dropdown.Menu>
+                        <Dropdown.Menu className="p-3">{}</Dropdown.Menu>
                     </Dropdown>
                 </Navbar.Collapse>
             </Container>

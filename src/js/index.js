@@ -1,7 +1,8 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useContext } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import FavoritesProvider from "./context/FavoritesProvider.jsx";
 
 import Home from "./pages/Home.jsx";
 import Layout from "./pages/Layout.jsx";
@@ -77,24 +78,26 @@ const App = () => {
 
     return (
         <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<Layout />}>
-                    <Route index element={<Home />} />
-                    <Route
-                        path="CharacterConstructor/:characterID"
-                        element={<CharacterConstructor />}
-                    />
-                    <Route
-                        path="VehicleConstructor/:vehicleID"
-                        element={<VehicleConstructor />}
-                    />
-                    <Route
-                        path="PlanetConstructor/:planetID"
-                        element={<PlanetConstructor />}
-                    />
-                    <Route path="search" element={<Search />} />
-                </Route>
-            </Routes>
+            <FavoritesProvider>
+                <Routes>
+                    <Route path="/" element={<Layout />}>
+                        <Route index element={<Home />} />
+                        <Route
+                            path="CharacterConstructor/:characterID"
+                            element={<CharacterConstructor />}
+                        />
+                        <Route
+                            path="VehicleConstructor/:vehicleID"
+                            element={<VehicleConstructor />}
+                        />
+                        <Route
+                            path="PlanetConstructor/:planetID"
+                            element={<PlanetConstructor />}
+                        />
+                        <Route path="search" element={<Search />} />
+                    </Route>
+                </Routes>
+            </FavoritesProvider>
         </BrowserRouter>
     );
 };

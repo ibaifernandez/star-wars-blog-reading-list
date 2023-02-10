@@ -30,7 +30,7 @@ const VehicleConstructor = () => {
 
     console.log(vehicleProperties);
 
-    useEffect(() => fetchVehiclesProperties(), []);
+    useEffect(() => fetchVehiclesProperties(), [vehicleID]);
 
     const {
         name,

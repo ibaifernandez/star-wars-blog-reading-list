@@ -29,7 +29,7 @@ const PlanetConstructor = () => {
             });
     };
 
-    useEffect(() => fetchPlanetProperties(), []);
+    useEffect(() => fetchPlanetProperties(), [planetID]);
 
     console.log(planetProperties);
     // console.log(charactersUid);
