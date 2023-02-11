@@ -1,24 +1,29 @@
-import React, { useContext, useEffect, useState } from "react";
-import FavoritesContext from "../context/FavoritesContext.jsx";
+import React, { useState } from "react";
 
-const HeartButton = ({ status }) => {
-    const { updateValue } = useContext(FavoritesContext);
-    const [on, setOn] = useState(status);
+const Heartbutton = ({ name, uid, addToFavorites, deleteFromFavorites }) => {
+    const [isActive, setIsActive] = useState(false);
 
-    const myFoo = (status) => {
-        if (!status) {
-            updateValue();
-            status = !status;
+    const handleClick = () => {
+        if (!isActive) {
+            addToFavorites(name, uid);
         } else {
-            updateValue();
+            deleteFromFavorites(uid);
         }
+        setIsActive(!isActive);
     };
 
     return (
-        <button className="outline-danger" onClick={myFoo}>
+        <button
+            className={`${
+                isActive ? "bg-danger rounded" : "outline-danger rounded"
+            }`}
+            onClick={() => {
+                handleClick();
+            }}
+        >
             ❤️
         </button>
     );
 };
 
-export default HeartButton;
+export default Heartbutton;

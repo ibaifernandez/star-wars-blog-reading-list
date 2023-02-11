@@ -4,11 +4,14 @@ import Card from "react-bootstrap/Card";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import FavoritesContext from "../context/FavoritesContext.jsx";
-import HeartButton from "./HeartButton.jsx";
+import Heartbutton from "./Heartbutton.jsx";
 
 const fetchCharacters = () => {
     const [characters, setCharacters] = useState([]);
     const navigate = useNavigate();
+
+    const { addToFavorites, deleteFromFavorites } =
+        useContext(FavoritesContext);
 
     useEffect(() => {
         fetch("https://www.swapi.tech/api/people/")
@@ -31,31 +34,9 @@ const fetchCharacters = () => {
             });
     }, []);
 
-    console.log(characters);
+    // console.log(characters);
 
-    // const [charactersData, setCharactersData] = useState([]);
-
-    // useEffect(() => {
-    //     characters.map(({ uid }) => {
-    //         fetch(`https://www.swapi.tech/api/people/${uid}`)
-    //             .then((response) => {
-    //                 if (!response.ok) {
-    //                     throw Error(response.statusText);
-    //                 }
-    //                 // console.log("The response was successful!");
-    //                 return response.json();
-    //             })
-    //             .then((thisResponse) => {
-    //                 // console.log(thisResponse.result);
-    //                 setCharactersData(thisResponse.result);
-    //             })
-    //             .catch((error) => {
-    //                 // console.log("Looks like there was a problem: \n", error);
-    //             });
-    //     }, []);
-    // });
-
-    // console.log(charactersData);
+    const [charactersData, setCharactersData] = useState([]);
 
     return (
         <div className="mx-auto w-75 my-3 d-flex overflow-auto">
@@ -70,7 +51,21 @@ const fetchCharacters = () => {
                     {/* 4.- Y con esa data ya puede setear X datos del personaje que mostrar donde quiero mostrar */}
                     <Card.Body>
                         <Card.Title>{name}</Card.Title>
-                        <Card.Text></Card.Text>
+                        <Card.Text>
+                            {/* <ul>
+                                {miniData.map(
+                                    ({ height, mass, birth_year }, i) => (
+                                        <>
+                                            <li key={height}>{height}</li>
+                                            <li key={mass}>{mass}</li>
+                                            <li key={birth_year}>
+                                                {birth_year}
+                                            </li>
+                                        </>
+                                    )
+                                )}
+                            </ul> */}
+                        </Card.Text>
                         <div className="d-flex justify-content-between">
                             <Button
                                 variant="primary"
@@ -80,7 +75,20 @@ const fetchCharacters = () => {
                             >
                                 More on {name}
                             </Button>
-                            <HeartButton status={false} />
+                            <Heartbutton
+                                name={name}
+                                uid={uid}
+                                addToFavorites={addToFavorites}
+                                deleteFromFavorites={deleteFromFavorites}
+                            />
+                            {/* <Button
+                                variant="outline-danger rounded"
+                                onClick={() => {
+                                    addToFavorites(name, uid);
+                                }}
+                            >
+                                ❤️
+                            </Button> */}
                         </div>
                     </Card.Body>
                 </Card>

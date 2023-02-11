@@ -11,13 +11,17 @@ import FavoritesContext from "../context/FavoritesContext.jsx";
 const MyNavbar = () => {
     const navigate = useNavigate();
 
-    const { value } = useContext(FavoritesContext);
-    console.log(value);
+    const { favoritesList, favoritesListLength, deleteFromFavorites } =
+        useContext(FavoritesContext);
 
-    const handleSearch = (e) => {
+    const handleSearchWithEnter = (e) => {
         if (e.key === "Enter") {
             navigate("/search");
         }
+    };
+
+    const handleSearchWithClick = (e) => {
+        navigate("/search");
     };
 
     return (
@@ -31,79 +35,111 @@ const MyNavbar = () => {
                         alt="Star Wars Logo"
                     />
                 </Navbar.Brand>
-                <div
-                    className="collapse navbar-collapse"
-                    id="navbarNavAltMarkup"
-                >
-                    <div className="navbar-nav">
-                        <NavLink
-                            to="CharacterConstructor/1"
-                            className={({ isActive }) =>
-                                isActive
-                                    ? "nav-item nav-link active"
-                                    : "nav-item nav-link"
-                            }
-                        >
-                            Characters
-                        </NavLink>
-                        <NavLink
-                            to="PlanetConstructor/1"
-                            className={({ isActive }) =>
-                                isActive
-                                    ? "nav-item nav-link active"
-                                    : "nav-item nav-link"
-                            }
-                        >
-                            Planets
-                        </NavLink>
-                        <NavLink
-                            to="VehicleConstructor/4"
-                            className={({ isActive }) =>
-                                isActive
-                                    ? "nav-item nav-link active"
-                                    : "nav-item nav-link"
-                            }
-                        >
-                            Vehicles
-                        </NavLink>
-                    </div>
-                </div>
-                <Navbar.Toggle aria-controls="navbarScroll" />
-                <Navbar.Collapse id="navbarScroll">
-                    <Nav
-                        className="me-auto my-2 my-lg-0 mh-100"
-                        navbarScroll
-                    ></Nav>
-                    <Form className="d-flex">
-                        <Form.Control
-                            type="search"
-                            placeholder="Search"
-                            className="me-2"
-                            aria-label="Search"
-                            onKeyDown={handleSearch}
-                        />
-                        <Button
-                            variant="outline-success"
-                            onClick={handleSearch}
-                        >
-                            Search
-                        </Button>
-                    </Form>
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav className="w-100 d-flex justify-content-between">
+                        <div className="d-flex">
+                            <NavLink
+                                to="/"
+                                className={({ isActive }) =>
+                                    isActive
+                                        ? "nav-item nav-link active"
+                                        : "nav-item nav-link"
+                                }
+                            >
+                                Home
+                            </NavLink>
+                            <NavLink
+                                to="CharacterConstructor/1"
+                                className={({ isActive }) =>
+                                    isActive
+                                        ? "nav-item nav-link active"
+                                        : "nav-item nav-link"
+                                }
+                            >
+                                Characters
+                            </NavLink>
+                            <NavLink
+                                to="PlanetConstructor/1"
+                                className={({ isActive }) =>
+                                    isActive
+                                        ? "nav-item nav-link active"
+                                        : "nav-item nav-link"
+                                }
+                            >
+                                Planets
+                            </NavLink>
+                            <NavLink
+                                to="VehicleConstructor/1"
+                                className={({ isActive }) =>
+                                    isActive
+                                        ? "nav-item nav-link active"
+                                        : "nav-item nav-link"
+                                }
+                            >
+                                Vehicles
+                            </NavLink>
+                        </div>
+                        <div className="d-flex me-5">
+                            <Form className="d-flex">
+                                <Form.Control
+                                    type="search"
+                                    placeholder="Search"
+                                    className="me-2"
+                                    aria-label="Search"
+                                    onKeyDown={handleSearchWithEnter}
+                                />
+                                <Button
+                                    variant="outline-success"
+                                    onClick={handleSearchWithClick}
+                                >
+                                    Search
+                                </Button>
+                            </Form>
 
-                    <Dropdown className="ms-3">
-                        <Dropdown.Toggle variant="primary" id="dropdown-basic">
-                            Favorites
-                            {value == 0 ? (
-                                " "
-                            ) : (
-                                <span className="bg-danger px-2 py-1 mx-1 rounded-circle">
-                                    {value}
-                                </span>
-                            )}
-                        </Dropdown.Toggle>
-
-                        <Dropdown.Menu className="p-3">{}</Dropdown.Menu>
-                    </Dropdown>
+                            <Dropdown className="ms-3">
+                                <Dropdown.Toggle
+                                    variant="primary"
+                                    id="dropdown-basic"
+                                >
+                                    Favorites
+                                    {favoritesListLength === 0 ? (
+                                        ""
+                                    ) : (
+                                        <span className="bg-danger px-2 py-1 mx-1 rounded-circle">
+                                            {favoritesListLength}
+                                        </span>
+                                    )}
+                                </Dropdown.Toggle>
+                                <Dropdown.Menu className="p-1 my-overflow">
+                                    {favoritesListLength === 0 ? (
+                                        "Add some favorites to your reading list."
+                                    ) : (
+                                        <ul className="list-group list-group-flush">
+                                            {favoritesList.map((item) => (
+                                                <li
+                                                    key={item}
+                                                    className="list-group-item d-flex justify-content-between"
+                                                >
+                                                    {item.hero}
+                                                    <button
+                                                        className="ms-auto outline-danger"
+                                                        onClick={() =>
+                                                            deleteFromFavorites(
+                                                                item.id
+                                                            )
+                                                        }
+                                                    >
+                                                        ❌
+                                                    </button>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    )}
+                                </Dropdown.Menu>
+                            </Dropdown>
+                        </div>
+                    </Nav>
                 </Navbar.Collapse>
             </Container>
         </Navbar>
