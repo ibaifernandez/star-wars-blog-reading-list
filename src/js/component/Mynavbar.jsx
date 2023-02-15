@@ -116,12 +116,12 @@ const MyNavbar = () => {
                                         "Add some favorites to your reading list."
                                     ) : (
                                         <ul className="list-group list-group-flush">
-                                            {favoritesList.map((item) => (
+                                            {favoritesList.map((item, id) => (
                                                 <li
-                                                    key={item}
+                                                    key={id}
                                                     className="list-group-item d-flex justify-content-between"
                                                 >
-                                                    {item.hero}
+                                                    {item.name}
                                                     <button
                                                         className="ms-auto outline-danger"
                                                         onClick={() =>

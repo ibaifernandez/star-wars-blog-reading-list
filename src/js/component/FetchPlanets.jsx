@@ -1,13 +1,18 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router";
 import placeholder from "../../img/placeholder.jpeg";
+import FavoritesContext from "../context/FavoritesContext.jsx";
+import Heartbutton from "./Heartbutton.jsx";
 
 const Planets = () => {
     const [planets, setPlanets] = useState([]);
     const navigate = useNavigate();
+
+    const { addToFavorites, deleteFromFavorites } =
+        useContext(FavoritesContext);
 
     useEffect(() => {
         fetch("https://www.swapi.tech/api/planets/")
@@ -54,12 +59,12 @@ const Planets = () => {
                             >
                                 More on {name}
                             </Button>
-                            <Button
-                                variant="outline-danger"
-                                // onClick={() => navigate("/search")}
-                            >
-                                ❤️
-                            </Button>
+                            <Heartbutton
+                                name={name}
+                                uid={uid}
+                                addToFavorites={addToFavorites}
+                                deleteFromFavorites={deleteFromFavorites}
+                            />
                         </div>
                     </Card.Body>
                 </Card>

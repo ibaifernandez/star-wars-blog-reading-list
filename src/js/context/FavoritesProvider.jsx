@@ -5,9 +5,9 @@ import FavoritesContext from "./FavoritesContext.jsx";
 const FavoritesProvider = ({ children }) => {
     const [favoritesList, setFavoritesList] = useState([]);
 
-    const updateList = (hero, id) => {
+    const updateList = (name, id) => {
         // console.log(hero);
-        setFavoritesList([...favoritesList, { hero, id }]);
+        setFavoritesList([...favoritesList, { name, id }]);
     };
 
     const deleteHeroName = (id) => {
