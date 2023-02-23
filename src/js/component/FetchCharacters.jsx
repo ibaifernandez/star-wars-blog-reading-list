@@ -1,95 +1,89 @@
-import React, { useContext } from "react";
-import Button from "react-bootstrap/Button";
+import React, { useState, useEffect, useContext } from "react";
+
+import ListGroup from "react-bootstrap/ListGroup";
+import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
-import { useState, useEffect } from "react";
+import Button from "react-bootstrap/Button";
+
 import { useNavigate } from "react-router";
+
 import FavoritesContext from "../context/FavoritesContext.jsx";
-import Heartbutton from "./Heartbutton.jsx";
+import Heartbutton from "./Heartbutton.jsx"; // Revisar importacion (cuidad con mayus y minisculas)
 
 const fetchCharacters = () => {
     const [characters, setCharacters] = useState([]);
+
     const navigate = useNavigate();
 
-    const { addToFavorites, deleteFromFavorites } =
+    const { addToFavorites, deleteFromFavorites, isActive } =
         useContext(FavoritesContext);
 
+    console.log(isActive);
+
+    const getCharacters = async () => {
+        try {
+            const response = await fetch("https://swapi.dev/api/people/");
+            const data = await response.json();
+            setCharacters(data.results);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     useEffect(() => {
-        fetch("https://www.swapi.tech/api/people/")
-            .then((response) => {
-                if (!response.ok) {
-                    throw Error(response.statusText);
-                }
-                // console.log("The response was successful!");
-                return response.json();
-            })
-            .then((thisResponse) => {
-                setCharacters(
-                    thisResponse.results.map((item) => {
-                        return item;
-                    })
-                );
-            })
-            .catch((error) => {
-                // console.log("Looks like there was a problem: \n", error);
-            });
+        getCharacters();
     }, []);
-
-    // console.log(characters);
-
-    const [charactersData, setCharactersData] = useState([]);
 
     return (
         <div className="mx-auto w-75 my-3 d-flex overflow-auto">
-            {characters.map(({ name, uid }) => (
-                <Card key={name} className="my-card">
+            {characters.map((character, id) => (
+                <Card key={id} className="my-card">
                     <Card.Img
                         variant="top"
-                        src={`https://starwars-visualguide.com/assets/img/characters/${uid}.jpg`}
+                        src={`https://starwars-visualguide.com/assets/img/characters/${
+                            id + 1
+                        }.jpg`}
                     />
-
-                    {/* 3.- Dentro de la Card, useEffect que haga el fetch de la URL que me aporta los datos que quiero mostrar */}
-                    {/* 4.- Y con esa data ya puede setear X datos del personaje que mostrar donde quiero mostrar */}
                     <Card.Body>
-                        <Card.Title>{name}</Card.Title>
-                        <Card.Text>
-                            {/* <ul>
-                                {miniData.map(
-                                    ({ height, mass, birth_year }, i) => (
-                                        <>
-                                            <li key={height}>{height}</li>
-                                            <li key={mass}>{mass}</li>
-                                            <li key={birth_year}>
-                                                {birth_year}
-                                            </li>
-                                        </>
-                                    )
-                                )}
-                            </ul> */}
-                        </Card.Text>
-                        <div className="d-flex justify-content-between">
+                        <Card.Title>
+                            <strong>{character.name}</strong>
+                        </Card.Title>
+                        <Container fluid className="p-0 my-3">
+                            <Card.Text as="div">
+                                <ListGroup>
+                                    <ListGroup.Item>
+                                        <strong>Height</strong>:{" "}
+                                        {character.height}: cm.
+                                    </ListGroup.Item>
+                                    <ListGroup.Item>
+                                        <strong>Weight</strong>:{" "}
+                                        {character.mass} kg.
+                                    </ListGroup.Item>
+                                    <ListGroup.Item>
+                                        <strong>Birth Year</strong>:{" "}
+                                        {character.birth_year}
+                                    </ListGroup.Item>
+                                </ListGroup>
+                            </Card.Text>
+                        </Container>
+                        <Container className="d-flex justify-content-between p-0">
                             <Button
                                 variant="primary"
                                 onClick={() =>
-                                    navigate(`/CharacterConstructor/${uid}`)
+                                    navigate(`/CharacterConstructor/${id + 1}`)
                                 }
                             >
-                                More on {name}
+                                More on {character.name}
                             </Button>
                             <Heartbutton
-                                name={name}
-                                uid={uid}
+                                name={character.name}
+                                uid={id}
+                                category="character"
                                 addToFavorites={addToFavorites}
                                 deleteFromFavorites={deleteFromFavorites}
+                                isActive={isActive}
                             />
-                            {/* <Button
-                                variant="outline-danger rounded"
-                                onClick={() => {
-                                    addToFavorites(name, uid);
-                                }}
-                            >
-                                ❤️
-                            </Button> */}
-                        </div>
+                        </Container>
                     </Card.Body>
                 </Card>
             ))}

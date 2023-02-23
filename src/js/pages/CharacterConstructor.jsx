@@ -5,6 +5,7 @@ import FetchCharacters from "../component/FetchCharacters.jsx";
 
 const CharacterConstructor = () => {
     const [characterProperties, setCharacterProperties] = useState([]);
+
     const { characterID } = useParams();
     console.log(characterID);
 

@@ -94,7 +94,7 @@ const App = () => {
                             path="PlanetConstructor/:planetID"
                             element={<PlanetConstructor />}
                         />
-                        <Route path="search" element={<Search />} />
+                        <Route path="search/:query" element={<Search />} />
                     </Route>
                 </Routes>
             </FavoritesProvider>

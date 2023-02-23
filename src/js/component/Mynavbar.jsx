@@ -1,27 +1,34 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Dropdown from "react-bootstrap/Dropdown";
-import { useNavigate, NavLink } from "react-router-dom";
+import { useNavigate, NavLink, Link } from "react-router-dom";
 import FavoritesContext from "../context/FavoritesContext.jsx";
 
 const MyNavbar = () => {
+    const [mySearch, setMySearch] = useState("");
+
     const navigate = useNavigate();
 
-    const { favoritesList, favoritesListLength, deleteFromFavorites } =
-        useContext(FavoritesContext);
+    const {
+        favoritesList,
+        favoritesListLength,
+        deleteFromFavorites,
+        active,
+        setActive,
+    } = useContext(FavoritesContext);
 
     const handleSearchWithEnter = (e) => {
         if (e.key === "Enter") {
-            navigate("/search");
+            navigate("/search/" + mySearch.replaceAll(" ", "+"));
         }
     };
 
     const handleSearchWithClick = (e) => {
-        navigate("/search");
+        navigate("/search/" + mySearch);
     };
 
     return (
@@ -87,6 +94,10 @@ const MyNavbar = () => {
                                     placeholder="Search"
                                     className="me-2"
                                     aria-label="Search"
+                                    value={mySearch}
+                                    onChange={(e) =>
+                                        setMySearch(e.target.value)
+                                    }
                                     onKeyDown={handleSearchWithEnter}
                                 />
                                 <Button
@@ -121,7 +132,23 @@ const MyNavbar = () => {
                                                     key={id}
                                                     className="list-group-item d-flex justify-content-between"
                                                 >
-                                                    {item.name}
+                                                    {item.category ==
+                                                    "character" ? (
+                                                        <Link
+                                                            style={{
+                                                                textDecoration:
+                                                                    "none",
+                                                            }}
+                                                            to={
+                                                                "/CharacterConstructor/" +
+                                                                (item.id + 1)
+                                                            }
+                                                        >
+                                                            {item.name}
+                                                        </Link>
+                                                    ) : (
+                                                        item.name
+                                                    )}
                                                     <button
                                                         className="ms-auto outline-danger"
                                                         onClick={() =>

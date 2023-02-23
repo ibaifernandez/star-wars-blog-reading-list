@@ -1,11 +1,17 @@
 import React, { useState } from "react";
 
-const Heartbutton = ({ name, uid, addToFavorites, deleteFromFavorites }) => {
+const Heartbutton = ({
+    name,
+    uid,
+    addToFavorites,
+    category,
+    deleteFromFavorites,
+}) => {
     const [isActive, setIsActive] = useState(false);
 
     const handleClick = () => {
         if (!isActive) {
-            addToFavorites(name, uid);
+            addToFavorites(name, uid, category);
         } else {
             deleteFromFavorites(uid);
         }

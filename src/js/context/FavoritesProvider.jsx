@@ -4,15 +4,21 @@ import FavoritesContext from "./FavoritesContext.jsx";
 
 const FavoritesProvider = ({ children }) => {
     const [favoritesList, setFavoritesList] = useState([]);
+    const [loaded, setLoaded] = useState(false);
+    const [isActive, setIsActive] = useState(false);
 
-    const updateList = (name, id) => {
-        // console.log(hero);
-        setFavoritesList([...favoritesList, { name, id }]);
+    console.log("Favorites Provider");
+    console.log(isActive);
+
+    const updateList = (name, id, category) => {
+        setFavoritesList([...favoritesList, { name, id, category }]);
     };
 
-    const deleteHeroName = (id) => {
+    const deleteCharacterName = (id) => {
         setFavoritesList(
-            favoritesList.filter((favoriteHero) => favoriteHero.id !== id)
+            favoritesList.filter(
+                (favoriteCharacter) => favoriteCharacter.id !== id
+            )
         );
     };
 
@@ -22,7 +28,10 @@ const FavoritesProvider = ({ children }) => {
                 favoritesList: favoritesList,
                 favoritesListLength: favoritesList.length,
                 addToFavorites: updateList,
-                deleteFromFavorites: deleteHeroName,
+                deleteFromFavorites: deleteCharacterName,
+                loaded: loaded,
+                setLoaded: setLoaded,
+                isActive: isActive,
             }}
         >
             {children}
